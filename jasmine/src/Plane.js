@@ -7,9 +7,17 @@ Plane.prototype.airport = function() {
 };
 
 Plane.prototype.land = function(airport) {
-  this._airport = airport;
+  if (this._airport === undefined) {
+    this._airport = airport;
+  } else {
+    throw "Plane cannot land: Plane already landed";
+  }
 };
 
 Plane.prototype.takeOff = function() {
-  this._airport = undefined;
+  if (this._airport !== undefined) {
+    this._airport = undefined;
+  } else {
+    throw "Plane cannot take off: Plane already flying";
+  }
 };
