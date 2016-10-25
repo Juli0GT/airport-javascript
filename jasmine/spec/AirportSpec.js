@@ -9,6 +9,12 @@ describe('Airport', function() {
       airport.land(plane);
       expect(airport.planes()).toContain(plane)
     });
+    it('raises an error when the airport is full', function() {
+      for (var i=1;i<20;i++)
+        {airport.land(new Plane())
+        };
+        expect(function() {airport.land(plane)}).toThrow("Plane cannot land: airport is full");
+    });
   });
 
   describe('take_off', function() {
