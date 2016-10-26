@@ -27,6 +27,9 @@ Airport.prototype.takeOff = function(plane) {
   if (!this._planes.includes(plane)) {
     throw "Plane is not in the airport";
   };
+  if (this.isBadWeather() === true){
+    throw "The weather is too bad to take off.";
+  };
   var index = this._planes.indexOf(plane);
   this._planes.splice(index);
   plane.takenOff();

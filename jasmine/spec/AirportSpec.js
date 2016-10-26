@@ -46,9 +46,25 @@ describe('Airport', function() {
       sunnyAirport.takeOff(plane);
       expect(sunnyAirport.planes()).not.toContain(plane);
     });
+
     it('raise an error when plane is not in the airport', function() {
       expect(function() {
         sunnyAirport.takeOff(plane);}).toThrow("Plane is not in the airport");
+    });
+
+    it('does not allow the plane to take off when the weather is bad', function () {
+      stormyAirport._planes.push(plane);
+      expect(function () {
+        stormyAirport.takeOff(plane)}).toThrow("The weather is too bad to take off.");
+      expect(stormyAirport.planes()).toContain(plane);
+    });
+  });
+
+  describe("isBadWeather", function () {
+    it("should have received the message isStormy", function () {
+      spyOn(airport._weather, "isStormy");
+      airport.isBadWeather();
+      expect(airport._weather.isStormy).toHaveBeenCalled();
     });
   });
 });
