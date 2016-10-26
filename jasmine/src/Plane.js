@@ -1,23 +1,15 @@
 function Plane() {
-
+  this.flying = true
 };
 
-Plane.prototype.airport = function() {
-  return this._airport;
+Plane.prototype.isFlying = function() {
+  return this.flying;
 };
 
-Plane.prototype.land = function(airport) {
-  if (this._airport === undefined) {
-    this._airport = airport;
-  } else {
-    throw "Plane cannot land: Plane already landed";
-  }
+Plane.prototype.takenOff = function () {
+  this.flying = true
 };
 
-Plane.prototype.takeOff = function() {
-  if (this._airport !== undefined) {
-    this._airport = undefined;
-  } else {
-    throw "Plane cannot take off: Plane already flying";
-  }
+Plane.prototype.landed = function () {
+  this.flying = false
 };
