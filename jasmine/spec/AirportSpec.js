@@ -3,33 +3,52 @@ describe('Airport', function() {
   var plane;
 
   beforeEach (function() {
+    stormyWeather = {
+      isStormy: function() {
+        return true;
+      }
+    }
+    sunnyWeather = {
+      isStormy: function () {
+        return false;
+      }
+    }
+    sunnyAirport = new Airport(sunnyWeather);
+    stormyAirport = new Airport(stormyWeather);
     plane = new Plane();
     airport = new Airport();
   });
 
   describe('land', function() {
     it('lands a plane', function() {
-      airport.land(plane);
-      expect(airport.planes()).toContain(plane);
+      sunnyAirport.land(plane);
+      expect(sunnyAirport.planes()).toContain(plane);
     });
+
     it('raises an error when the airport is full', function() {
       for (var i=1;i<=20;i++) {
-        airport.land(new Plane())
+        sunnyAirport.land(new Plane())
         };
         expect(function() {
-          airport.land(plane);}).toThrow("Plane cannot land: airport is full");
+          sunnyAirport.land(plane);}).toThrow("Plane cannot land: airport is full");
+    });
+
+    it('does not allow plane to land when the weather is stormy', function () {
+      expect(function () {
+        stormyAirport.land(plane)}).toThrow("The weather is too bad to land.");
+      expect(stormyAirport.planes()).not.toContain(plane);
     });
   });
 
   describe('takeOff', function() {
     it('takes off a plane', function() {
-      airport.land(plane);
-      airport.takeOff(plane);
-      expect(airport.planes()).not.toContain(plane);
+      sunnyAirport.land(plane);
+      sunnyAirport.takeOff(plane);
+      expect(sunnyAirport.planes()).not.toContain(plane);
     });
     it('raise an error when plane is not in the airport', function() {
       expect(function() {
-        airport.takeOff(plane);}).toThrow("Plane is not in the airport");
+        sunnyAirport.takeOff(plane);}).toThrow("Plane is not in the airport");
     });
   });
 });
